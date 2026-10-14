@@ -4,6 +4,23 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import { FetchError } from 'ofetch'
 import * as z from 'zod'
 
+
+const { data, status } = await useLazyFetch<any>('https://reqres.in/api/users?page=2')
+
+const users = ref<any[]>([])
+
+if (status.value === 'success') {
+  data.value.data.forEach((user: any) => {
+    users.value.push({
+      name: `${user.first_name} ${user.last_name}`,
+      description: user.email,
+      avatar: {
+        src: user.avatar
+      }
+    })
+  })
+}
+
 const features = ref<PageFeatureProps[]>([
   {
     title: 'Fullstack Engineer',
@@ -33,7 +50,7 @@ const items = [
 ]
 
 const schema = z.object({
-  nombre: z.string('El nombre es requerido').optional(),
+  nombre: z.string('El nombre es requerido'),
   email: z.email('El email es incorrecto'),
   mensaje: z.string().optional()
 })
@@ -72,20 +89,25 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <div>
-    
     <UPageHero
+      id="inicio"
+      class="scroll-mt-16"
       title="Prueba Técnica"
       description="Miguel Angel Morales Arteaga"
       headline="Software Engineer"
     />
 
     <UPageSection
+      id="servicios"
+      class="scroll-mt-16"
       title="Servicios"
       description="Mis áreas de expertise"
       :features="features"
     />
 
     <UPageSection
+      id="testimonios"
+      class="scroll-mt-16"
       title="Testimonios"
       description="Algunas de las marcas con las que he trabajado"
     />
@@ -114,6 +136,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </div>
 
     <UPageSection
+      id="formulario-contacto"
+      class="scroll-mt-16"
       title="Contacto"
     />
 
@@ -143,6 +167,29 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         {{ response }}
       </span>
     </div>
+
+    <UPageSection
+      id="request"
+      class="scroll-mt-16"
+      title="Http Request"
+    />
+
+    <div class="flex justify-center">
+      <UPageList>
+        <UPageCard
+          v-for="(user, index) in users"
+          :key="index"
+          variant="ghost"
+          :to="user.to"
+          :target="user.target"
+        >
+          <template #body>
+            <UUser :name="user.name" :description="user.description" :avatar="user.avatar" size="xl" class="relative" />
+          </template>
+        </UPageCard>
+      </UPageList>
+    </div>
+
 
   </div>
 </template>
