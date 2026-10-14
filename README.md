@@ -45,3 +45,19 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 ## Renovate integration
 
 Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
+
+---
+
+## Documentacion y reflexion
+
+### Decisiones Tecnicas
+
+Elegi este framework porque es el framework ideal para este tipo de proyectos junto con su framework oficial de components (Nuxt UI). Así mismo, tengo expertise con este framework.
+
+### Un reto que enfrenté y como lo resolví
+
+Realmente ninguno, la integración con todo fue bastante fluida
+
+### Como use la IA
+
+La IA la utilice para pequeñas cosas, como crear el layout responsivo (app/layouts/default.vue) y estilizar estos documentos de markdown.
